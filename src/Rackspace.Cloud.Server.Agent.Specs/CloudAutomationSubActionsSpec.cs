@@ -31,20 +31,5 @@ namespace Rackspace.Cloud.Server.Agent.Specs
             Assert.IsFalse(cloudAutomationActions.IsSysPrepSignalPresent());
         }
 
-        [Test]
-        public void should_create_then_detect_kmsactivate_key_and_remove_it_and_detect_it_is_gone()
-        {
-            var cloudAutomationActions = ObjectFactory.GetInstance<ICloudAutomationSubActions>();
-
-            Assert.IsTrue(cloudAutomationActions.WriteKMSActivateSignal());
-
-            Assert.IsTrue(cloudAutomationActions.IsKMSActivateSignalPresent());
-
-            Assert.IsTrue(cloudAutomationActions.RemoveKMSActivateSignal());
-
-            Assert.IsFalse(cloudAutomationActions.IsKMSActivateSignalPresent());
-        }
-
-       
     }
 }

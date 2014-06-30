@@ -27,11 +27,6 @@ namespace Rackspace.Cloud.Server.Agent.Actions
         bool IsSysPrepSignalPresent();
         bool RemoveSysPrepSignal();
 
-        //KMSActivate Signal Commands
-        bool IsKMSActivateSignalPresent();
-        bool WriteKMSActivateSignal();
-        bool RemoveKMSActivateSignal();
-
         //Run cloud script(s) command
         void RunCloudAutomationScripts();
     }
@@ -72,70 +67,6 @@ namespace Rackspace.Cloud.Server.Agent.Actions
                     if (rk != null)
                     {
                         rk.DeleteValue(Constants.CloudAutomationSysPrepRegKey);
-                    }
-                }
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(ex.ToString());
-                return false;
-            }
-        }
-
-        public bool IsKMSActivateSignalPresent()
-        {
-            using (var rk = Registry.LocalMachine.OpenSubKey(Constants.RackspaceRegKey))
-            {
-                if (rk != null)
-                {
-                    var signal = rk.GetValue(Constants.CloudAutomationKMSActivateRegKey);
-
-                    if (signal != null)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        public bool WriteKMSActivateSignal()
-        {
-            try
-            {
-                using (var rsrk = Registry.LocalMachine.CreateSubKey(Constants.RackspaceRegKey))
-                {
-                    if (rsrk != null)
-                    {
-                        rsrk.SetValue(Constants.CloudAutomationKMSActivateRegKey, "True");
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(ex.ToString());
-                return false;
-            }
-        }
-
-        public bool RemoveKMSActivateSignal()
-        {
-            try
-            {
-                using (var rk = Registry.LocalMachine.OpenSubKey(Constants.RackspaceRegKey, true))
-                {
-                    if (rk != null)
-                    {
-                        rk.DeleteValue(Constants.CloudAutomationKMSActivateRegKey);
                     }
                 }
 
