@@ -37,7 +37,7 @@ namespace Rackspace.Cloud.Server.Agent.Actions
                 if ("0".Equals(renameResult))
                 {
                     RestartManager.RestartNeeded = true;
-                    RestartManager.CommandSetsToRun = 1;
+                    RestartManager.CommandSetsToRun = 0;
                 }
                    
                 return renameResult;

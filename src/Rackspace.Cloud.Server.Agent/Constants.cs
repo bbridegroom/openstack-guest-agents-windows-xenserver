@@ -25,7 +25,6 @@ namespace Rackspace.Cloud.Server.Agent {
 
         public const string RackspaceRegKey = @"SOFTWARE\Rackspace";
         public const string CloudAutomationSysPrepRegKey = "cloud-automation";
-        public const string CloudAutomationKMSActivateRegKey = "cloud-automation-run";
 
         public const string CloudAutomationCmdPath = @"c:\cloud-automation\bootstrap.cmd";
         public const string CloudAutomationBatPath = @"c:\cloud-automation\bootstrap.bat";

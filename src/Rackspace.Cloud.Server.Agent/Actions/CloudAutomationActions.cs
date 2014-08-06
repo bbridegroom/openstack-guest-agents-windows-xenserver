@@ -14,7 +14,6 @@
 //    under the License.
 
 using System;
-using Rackspace.Cloud.Server.Common.Restart;
 using Rackspace.Cloud.Server.Common.Logging;
 
 namespace Rackspace.Cloud.Server.Agent.Actions
@@ -22,7 +21,6 @@ namespace Rackspace.Cloud.Server.Agent.Actions
     public interface ICloudAutomationActions
     {
         void RunKMSActivateCloudAutomationScripts();
-        void RunPostRebootCloudAutomationScripts();
     }
 
     public class CloudAutomationActions : ICloudAutomationActions
@@ -38,35 +36,6 @@ namespace Rackspace.Cloud.Server.Agent.Actions
 
         #region ICloudAutomationActions Members
 
-        public void RunPostRebootCloudAutomationScripts()
-        {
-            try
-            {
-                _logger.Log("Checking for KMSActivate cloud automation registry entry");
-                if (_cloudAutomationSubActions.IsKMSActivateSignalPresent())
-                {
-                    _logger.Log("KMSActivate registry entry found, removing registry entry");
-                    if (_cloudAutomationSubActions.RemoveKMSActivateSignal())
-                    {
-                        _logger.Log("Successfully removed KMSActivate registry entry, running cloud automation scripts");
-                        _cloudAutomationSubActions.RunCloudAutomationScripts();
-                    }
-                    else
-                    {
-                        _logger.Log("Could not delete the KMSActivate registry entry for cloud automation, not running cloud automation.");
-                    }
-                }
-                else
-                {
-                    _logger.Log("KMSActivate cloud automation registry entry not detected.");
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(string.Format("Error running cloud automation: {0}", ex));
-            }
-        }
-
         public void RunKMSActivateCloudAutomationScripts()
         {
             try
@@ -77,21 +46,12 @@ namespace Rackspace.Cloud.Server.Agent.Actions
                     _logger.Log("SysPrep registry entry found, removing registry entry");
                     if (_cloudAutomationSubActions.RemoveSysPrepSignal())
                     {
-                        _logger.Log("Successfully removed SysPrep registry entry, checking to see if a reboot is pending");
-                        if (RestartManager.RestartNeeded)
-                        {
-                            _logger.Log("Reboot is pending, writing KMSActivate registry entry for post reboot cloud automation script execution");
-                            _cloudAutomationSubActions.WriteKMSActivateSignal();
-                        }
-                        else
-                        {
-                            _logger.Log("Reboot is not pending, running cloud automation scripts");
-                            _cloudAutomationSubActions.RunCloudAutomationScripts();
-                        }
+                        _logger.Log("Successfully removed SysPrep registry entry, running cloud automation scripts");
+                        _cloudAutomationSubActions.RunCloudAutomationScripts();
                     }
                     else
                     {
-                        _logger.Log("Could not remove the SysPrep registry key, not writing the KMSActivate registry key for cloud automation.");
+                        _logger.Log("Could not remove the SysPrep registry key, not running cloud automation.");
                     }
                 }
                 else
@@ -101,7 +61,7 @@ namespace Rackspace.Cloud.Server.Agent.Actions
             }
             catch (Exception ex)
             {
-                _logger.Log(string.Format("An error occurred while writing the KMSActivate registry key for cloud automation: {0}", ex));
+                _logger.Log(string.Format("An error occurred while trying to run cloud automation: {0}", ex));
             }
         }
 

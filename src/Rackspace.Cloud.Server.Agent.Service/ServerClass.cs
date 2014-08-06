@@ -51,7 +51,6 @@ namespace Rackspace.Cloud.Server.Agent.Service {
             StructureMapConfiguration.BuildInstancesOf<ITimer>().TheDefaultIs(Registry.Object(_timer));
             IoC.Register();
 
-            RunCloudAutomation();
             CheckAgentUpdater();
 
             _timer.Enabled = true;
@@ -98,10 +97,5 @@ namespace Rackspace.Cloud.Server.Agent.Service {
             }
         }
 
-        private void RunCloudAutomation()
-        {
-            var cloudAutomationActions = ObjectFactory.GetInstance<ICloudAutomationActions>();
-            cloudAutomationActions.RunPostRebootCloudAutomationScripts();
-        }
     }
 }

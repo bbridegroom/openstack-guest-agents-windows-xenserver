@@ -118,13 +118,6 @@ namespace Rackspace.Cloud.Server.Agent
 
         private void WriteToXenStore(string key, string value)
         {
-            if (RestartManager.RestartNeeded)
-            {
-                if (RestartManager.CommandSetsToRun <= 0)
-                {
-                    return;
-                }
-            }
             _store.Write(key, value);
         }
 
