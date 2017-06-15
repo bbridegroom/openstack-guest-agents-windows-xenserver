@@ -118,6 +118,8 @@ namespace Rackspace.Cloud.Server.Agent
 
                 var keys = new List<string>();
                 var value = (IEnumerable<string>) children.GetPropertyValue("ChildNodes");
+                if (value == null) return keys;
+
                 foreach (var v in value)
                 {
                     _logger.Log(string.Format("Key: {0}, Value: {1}", key, v.Replace(key + "/", "")));

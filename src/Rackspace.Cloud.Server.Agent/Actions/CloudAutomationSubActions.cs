@@ -150,6 +150,7 @@ namespace Rackspace.Cloud.Server.Agent.Actions
 
         public void RunCloudAutomationScripts()
         {
+            StartProcess(Constants.DeployCompleteCmdPath);
             StartProcess(Constants.CloudAutomationBatPath);
             StartProcess(Constants.CloudAutomationCmdPath);
         }
