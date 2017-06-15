@@ -27,7 +27,8 @@ namespace Rackspace.Cloud.Server.Agent {
         public const string CloudAutomationSysPrepRegKey = "cloud-automation";
         public const string CloudAutomationKMSActivateRegKey = "cloud-automation-run";
         public const string XenToolsUpdateSignalKey = "xentools-update-signal";
-        
+
+        public const string DeployCompleteCmdPath = @"c:\windows\setup\scripts\deploycomplete.cmd";
         public const string CloudAutomationCmdPath = @"c:\cloud-automation\bootstrap.cmd";
         public const string CloudAutomationBatPath = @"c:\cloud-automation\bootstrap.bat";
 
